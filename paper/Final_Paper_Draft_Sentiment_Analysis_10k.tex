@@ -17,9 +17,10 @@
 \maketitle
 
 \begin{abstract}
-Sentiment analysis has become a cornerstone of natural language processing (NLP) applications, with increasing relevance in financial document analysis. This paper explores the application of sentiment analysis techniques to SEC 10-K filings, using both lexicon-based and transformer-based methods. We review the evolution of sentiment analysis, emphasizing how transformers have revolutionized the field, particularly in the analysis of lengthy, domain-specific documents. In our study, we employed three different section levels and two different models. For the section-level analysis, we focused on high-sentiment items (Items 1, 7, and 7A), the full document, and summarized text. Our work builds upon prior research while offering enhancements by systematically comparing multiple sentiment evaluation techniques across full-document and section-level granularities.
+This study explores the application of sentiment analysis methodologies on SEC 10-K filings by comparing a lexicon-based technique, the Loughran-McDonald (LM) dictionary, and a transformer-based model, FinBERT. We systematically analyzed sentiment at both section level (Items 1, 7, and 7A) and full-document level. Pearson correlation analysis revealed moderate positive relationships between LM and FinBERT sentiment scores, with the highest correlation observed in Item 7A ($r=0.4604$). Paired samples t-tests highlighted significant differences in sentiment detection, particularly in risk-related sections. Class distribution analysis showed that FinBERT tended to identify more positive tones, while LM produced a higher proportion of neutral classifications. Agreement analysis between the two methods ranged between 61\% and 68\%, underscoring both overlap and divergence in sentiment interpretation. Overall, while LM provides greater interpretability, FinBERT captures nuanced financial sentiments with higher sensitivity. Our findings contribute to the evaluation of sentiment extraction techniques on complex, domain-specific corporate disclosures.
 \end{abstract}
 
+\textbf{Keywords:} Sentiment Analysis, Financial NLP, SEC 10-K Filings, Loughran-McDonald Lexicon, FinBERT, Transformer Models, Lexicon-Based Methods, Sentiment Classification, Financial Text Mining
 \section{Introduction}
 Sentiment analysis, also known as opinion mining, is the field of study that analyzes people's opinions, sentiments, appraisals, attitudes, and emotions toward entities and their attributes expressed in written text. The entities can be products, services, organizations, individuals, events, issues, or topics. Many related names and slightly different tasks — for example, sentiment analysis, opinion mining, opinion analysis, opinion extraction, sentiment mining, subjectivity analysis, affect analysis, emotion analysis, and review mining — are now all under the umbrella of sentiment analysis. The term \textit{sentiment analysis} perhaps first appeared in \citep{Nasukawa2003}, and the term \textit{opinion mining} first appeared in \citep{Dave2003}. According to \citet{Pang2008}, sentiment analysis refers to the use of natural language processing (NLP), text analysis, and computational linguistics to identify and extract subjective information from textual sources. It has widespread applications in fields such as marketing, politics, and finance. Traditional sentiment analysis methods were primarily lexicon-based or employed machine learning algorithms on bag-of-words representations.
 
@@ -41,32 +42,38 @@ In general, sentiment analysis research is carried out at three levels of granul
 Transformer models fine-tuned for finance, such as FinBERT \citep{Araci2019}, have shown superior performance compared to traditional models. FinBERT adapts the original BERT architecture to the financial context by pretraining on financial corpora. Recent works \citep{Huang2020} have applied such models to segment-specific analysis within filings, extracting richer sentiment signals for investment decisions.
 
 \section{Methodology}
+
 \subsection{Data Collection}
-We collected SEC 10-K filings by programmatically accessing the Securities and Exchange Commission (SEC) EDGAR database. Specifically, we retrieved the master index files, parsed them to identify 10-K filing URLs, and extracted the primary filing documents. To process the retrieved HTML content, we utilized the BeautifulSoup library in Python, which allowed for efficient parsing and extraction of meaningful text while discarding metadata, scripts, and formatting tags.
+We collected SEC 10-K filings by programmatically accessing the Securities and Exchange Commission (SEC) EDGAR database. Specifically, master index files were retrieved and parsed to identify 10-K filing URLs, from which primary filing documents were extracted. We utilized the BeautifulSoup library in Python to parse the retrieved HTML content, removing metadata, scripts, and formatting tags to retain only meaningful textual content.
 
 \subsection{Preprocessing}
-We focused on extracting the narrative sections of the 10-K filings, removing tables of contents, exhibits, and embedded tables to retain only the main textual content relevant for sentiment analysis. Our final dataset includes multiple companies across various sectors within the S\&P 500 index, ensuring industry diversity. During preprocessing, we cleaned the text by removing HTML tags, extra whitespace, and non-informative sections. Tokenization and sentence segmentation were then applied using the NLTK library to prepare the data for analysis.
-
-%\subsection{Sentiment Analysis on Summarized Text}
-
-%In addition to section level and full document, we conducted sentiment analysis on summarized versions of the 10-K filings. Summarization was performed using the \texttt{facebook/bart-large-cnn} model, a transformer-based sequence-to-sequence architecture known for its effectiveness in abstractive summarization tasks. Given the length constraints of transformer models, we implemented a dynamic chunking strategy where each filing was divided into manageable segments before summarization. The individual summaries were then concatenated to form a condensed representation of the full filing.
-
-%Following summarization, we applied the FinBERT sentiment analysis model to the summarized text. This approach allowed us to evaluate whether a condensed version of the 10-K filing could preserve the overall sentiment signal captured in the full document. Sentiment scores for the summarized text were stored in a separate column within our analysis dataframe to facilitate direct comparison with the full-text and section-level sentiment results.
-
-%Our findings suggest that while summarization retains the general sentiment direction (i.e., positive, neutral, or negative classification), it may attenuate sentiment intensity due to the loss of finer contextual and tonal cues present in the original full-length document. This effect was particularly noticeable in filings where sentiment signals were localized within specific sections rather than evenly distributed throughout the document.
-
-%Overall, the sentiment analysis of summarized text offers a computationally efficient alternative for preliminary screening of financial disclosures. However, for more granular analysis or predictive modeling tasks, full-document or targeted section-level analysis remains preferable to avoid sentiment dilution introduced by summarization.
+To focus on the narrative sections relevant for sentiment analysis, we systematically removed tables of contents, exhibits, embedded tables, and other non-informative sections. Text cleaning procedures included the removal of residual HTML artifacts, extra whitespace, and isolated non-textual tokens. Tokenization and sentence segmentation were performed using the Natural Language Toolkit (NLTK) library. Our final dataset consists of filings from multiple companies across diverse sectors within the S\&P 500 index.
 
 \subsection{Sentiment Analysis Techniques}
-\paragraph{Lexicon-Based Method:} Using the LM dictionary, we computed the net sentiment by calculating the proportion of positive and negative words relative to total words. We also derived positive and negative percentages separately.
+\paragraph{Lexicon-Based Method:} 
+For the lexicon-based sentiment analysis, we employed the Loughran-McDonald (LM) financial sentiment dictionary \citep{Loughran2011}, which is specifically designed to address the shortcomings of traditional general-purpose sentiment lexicons (e.g., Harvard IV-4, General Inquirer) when applied to financial documents. 
 
-\paragraph{Transformer-Based Method:} We employed FinBERT to analyze sentiment. Text was divided into smaller segments (~5 sentences per chunk) to fit within model token limits. FinBERT outputs sentiment labels (Positive, Neutral, Negative) with associated probabilities, which we aggregated to compute an overall sentiment score per document and per section.
+The LM dictionary was created by manually labeling words extracted from 10-K filings and categorizing them into sentiment classes such as Positive, Negative, Uncertainty, Litigious, Strong Modal, and Weak Modal. Notably, common English words that are neutral or even positive in financial contexts (e.g., "liability", "capital") are correctly reclassified in the LM lexicon, thus reducing misclassification errors that occur when using general dictionaries.
+
+In our analysis, we utilized the Positive and Negative word lists from the LM dictionary to compute sentiment scores. Each 10-K text (either full document or section) was tokenized and lowercased. Stopwords and non-alphabetic tokens were removed. We then calculated:
+
+\begin{itemize}
+    \item \textbf{Positive Word Percentage:} The number of positive words divided by the total number of valid tokens.
+    \item \textbf{Negative Word Percentage:} The number of negative words divided by the total number of valid tokens.
+    \item \textbf{Net Sentiment Score (\%):} \[
+    \text{Net Sentiment} = \left( \frac{\text{Positive Word Count} - \text{Negative Word Count}}{\text{Total Tokens}} \right) \times 100
+    \]
+\end{itemize}
+
+This method provides a transparent and interpretable sentiment measurement, allowing for direct tracking of how much positive versus negative language is used within corporate disclosures.
+
+\paragraph{Transformer-Based Method:} Sentiment analysis was also performed using FinBERT, a BERT-based model fine-tuned on financial texts. Given the token length constraints of transformer models, the input text was divided into dynamic chunks of approximately three sentences each. Batched inference was utilized to optimize GPU usage. For each chunk, FinBERT output sentiment labels (Positive, Neutral, Negative), which were aggregated to derive an overall sentiment score for each document and section.
 
 \subsection{Sentiment Aggregation}
-For section-level analysis, each major part of the 10-K (e.g., Risk Factors, MD\&A) was analyzed separately. Scores were then aggregated by weighted averaging based on section length.
+For section-level sentiment analysis, sentiment scores were calculated separately for major 10-K sections, such as Risk Factors (Item 1A) and Management’s Discussion and Analysis (Item 7). Scores were aggregated via simple weighted averaging based on section lengths. For full-document sentiment, sentiment scores across all chunks were averaged to yield a single representative score.
 
 \subsection{Comparison}
-We compared the results of LM-based and FinBERT-based sentiment analysis at both document and section levels. Statistical correlation metrics were employed to assess agreement between the methods.
+To compare the performance and consistency of the two sentiment analysis techniques, we conducted a series of statistical evaluations, including Pearson correlation analysis, paired samples t-tests, sentiment class distribution comparisons, and agreement rate calculations across document and section levels.
 
 \section{Results}
 
@@ -94,7 +101,7 @@ Document & 0.4543 & 0.0000 & -11.4415 & 0.0000 \\
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{correlation_scatter_full_and_sections.png}
+\includegraphics[width=0.9\textwidth]{figures/correlation_scatter_full_and_sections.png}
 \caption{Correlation Scatter Plots between LM and FinBERT sentiment scores at full-document and section levels.}
 \label{fig:scatter_all}
 \end{figure}
@@ -127,7 +134,7 @@ Sentiment scores were categorized into Positive, Neutral, and Negative classes b
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{agreement_bar_chart.png}
+\includegraphics[width=0.7\textwidth]{figures/agreement_bar_chart.png}
 \caption{Agreement rates between LM and FinBERT sentiment classifications at full-document and section levels.}
 \label{fig:agreement_bar}
 \end{figure}
@@ -139,16 +146,27 @@ Finally, Figure~\ref{fig:class_dist_all} compares the distribution of sentiment 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{class_distribution_all_sections.png}
+\includegraphics[width=0.9\textwidth]{figures/class_distribution_all_sections.png}
 \caption{Class distribution comparison between LM and FinBERT across full-document and section levels.}
 \label{fig:class_dist_all}
 \end{figure}
 \vspace{0.5cm}
 
 \section{Discussion}
-Our analysis revealed that transformer-based models, such as FinBERT, captured nuanced sentiment shifts within different sections more effectively than lexicon-based methods. However, LM-based approaches offered better interpretability and transparency, essential for regulatory contexts.
 
-Furthermore, we observed that sentiment varied significantly across sections, underlining the importance of section-level granularity. Aggregate document-level sentiment often masked important local variations, especially within critical sections like Risk Factors.
+Our comparative analysis of sentiment analysis techniques across SEC 10-K filings reveals important differences between traditional lexicon-based methods and transformer-based models.
+
+The use of the Loughran-McDonald (LM) dictionary \citep{Loughran2011} provides an interpretable and domain-specific baseline for financial sentiment extraction. However, our results indicate that transformer models like FinBERT \citep{Araci2019} capture more nuanced variations in financial language, especially in sections with risk disclosures and forward-looking statements. This is consistent with recent findings that pretrained language models exhibit superior sensitivity to subtle positive and negative sentiment cues in corporate narratives \citep{Huang2020}.
+
+Pearson correlation analysis demonstrated moderate positive relationships between LM and FinBERT sentiment scores across all sections, with the strongest alignment observed in Item 7A. However, the moderate correlation coefficients (around $0.45$) also highlight that the two methods interpret financial sentiment somewhat differently, likely due to FinBERT’s contextual embedding capabilities compared to LM’s keyword-matching approach.
+
+The paired samples t-tests confirmed statistically significant differences in mean sentiment scores for several sections, particularly in risk-related disclosures. FinBERT consistently produced less negative (closer to neutral) sentiment scores compared to LM, suggesting that transformer-based methods may be better suited for detecting embedded optimism or hedged positivity in financial disclosures, which is often critical for investment interpretation.
+
+Agreement rate analysis, ranging between 61\% and 68\%, indicates moderate but imperfect alignment in sentiment classification outcomes. This level of divergence aligns with prior research that highlights challenges in achieving high consistency across different sentiment extraction methodologies when applied to complex domain-specific corpora like 10-K filings \citep{Li2010}.
+
+Moreover, class distribution comparisons revealed that FinBERT assigned a greater proportion of documents to the Positive category compared to LM, which favored Neutral classifications. This difference suggests that lexicon-based methods may adopt a more conservative stance, while transformer models, due to their semantic understanding, can detect optimistic tones even in formally cautious regulatory language.
+
+Overall, these findings emphasize the need for careful methodological selection when conducting financial sentiment analysis. While LM-based approaches offer transparency and reproducibility, transformer-based models provide richer context-sensitive representations that may better capture managerial tone, strategic signaling, and implicit risk communications in financial narratives.
 
 \section{Limitations}
 Despite the significant advancements brought by transformer-based models, several limitations persist when applying sentiment analysis to large financial documents like SEC 10-K filings.
@@ -164,9 +182,13 @@ Finally, section-level sentiment aggregation assumes equal importance across all
 Overall, while transformer models enhance performance on long document sentiment tasks, careful methodological design, including dynamic chunking, weighted section aggregation, and post-hoc human validation, remains critical to achieve reliable results.
 
 \section{Conclusion}
-Sentiment analysis of SEC 10-K filings offers valuable insights into corporate risk and outlook. While traditional lexicon-based methods like LM remain effective for baseline analyses, transformer models such as FinBERT significantly enhance the depth and precision of sentiment detection, particularly in complex, lengthy financial documents. Future research may explore hybrid approaches that combine the interpretability of lexicons with the contextual depth of transformers.
+This study provides a comprehensive comparison between lexicon-based and transformer-based sentiment analysis techniques applied to SEC 10-K filings. Our findings show that while the Loughran-McDonald (LM) dictionary offers interpretability and transparency in financial sentiment extraction, transformer models like FinBERT capture nuanced expressions and subtle tonal variations more effectively. 
 
-\section*{References}
+Moderate correlations and agreement rates between the two methods highlight both alignment and systematic differences, particularly in risk disclosure sections. Furthermore, FinBERT's higher sensitivity to positive sentiment signals reflects its strength in understanding the contextual nuances inherent in complex financial narratives.
+
+These results underscore the importance of selecting sentiment analysis approaches tailored to the specific objectives of financial research. Future work may explore hybrid methodologies that combine the transparency of lexicon-based methods with the contextual depth of transformer-based models to achieve more robust financial sentiment insights.
+
+% \section*{References}
 \begin{thebibliography}{}
 
 \bibitem[Pang et al.(2002)]{Pang2002}
@@ -210,6 +232,9 @@ Allen Huang, Chen Lin, Zigan Wang, and Luo Zuo. "Machine Learning and Financial 
 
 \bibitem[Tay et al.(2020)]{Tay2020}
 Yi Tay, Mostafa Dehghani, Dara Bahri, and Donald Metzler. "Efficient Transformers: A Survey." arXiv preprint arXiv:2009.06732 (2020).
+
+\bibitem[Loughran and McDonald(2011)]{Loughran2011}
+Tim Loughran and Bill McDonald. "When is a liability not a liability? Textual analysis, dictionaries, and 10-Ks." Journal of Finance 66, no. 1 (2011): 35-65.
 
 
 \end{thebibliography}
