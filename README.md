@@ -88,6 +88,6 @@ Our goal is to evaluate how these two techniques perform on lengthy, domain-spec
 
 - **Author**: Naresh Chethala
 - **Collaborators**: Furqan Ahmed, Sai Harshith
-- **Email**: [Your Email Here] (Optional)
+- **Email**: nc623367@wne.edu
 
 ---
