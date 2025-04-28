@@ -53,7 +53,7 @@ All visualizations were generated using Matplotlib and Seaborn.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/10K_Sentiment_Analysis.git
+   git clone https://github.com/NareshChethala/10K_Sentiment_Analysis.git
    cd 10K_Sentiment_Analysis
    ```
 2. Install dependencies:
