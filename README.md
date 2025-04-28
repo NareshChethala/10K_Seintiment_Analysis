@@ -97,7 +97,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 If you have any questions, feedback, or collaboration opportunities, feel free to reach out:
 
-- 📧 Email: [nareshchethala@example.com](mailto:nareshchethala99@outlook.com)
+- 📧 Email: [nareshchethala99@outlook.com](mailto:nareshchethala99@outlook.com)
 - 🌐 GitHub: [@NareshChethala](https://github.com/NareshChethala)
 
 ---
