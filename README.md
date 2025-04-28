@@ -34,7 +34,7 @@ The project explores how well each method captures financial sentiment and discu
 
 ## Key Results
 
-- **Correlation**: Moderate positive correlations between LM and FinBERT (r \u2248 0.45).
+- **Correlation**: Moderate positive correlations between LM and FinBERT (r ≈ 0.45).
 - **Sentiment Scores**: FinBERT detects slightly more optimistic tones compared to LM.
 - **Agreement Rates**: Ranged from 21.4% to 89.2% depending on section.
 - **Confusion Matrix**: Highlighted that FinBERT is more sensitive to subtle negative cues missed by LM.
