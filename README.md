@@ -1,93 +1,86 @@
 # Sentiment Analysis on SEC 10-K Filings
-**Comparing Lexicon-Based and Transformer-Based Sentiment Analysis Techniques**
+**Comparing Dictionary-Based and Transformer-Based Methods**
+
+## Overview
+This study analyzes sentiment in SEC 10-K filings by comparing two approaches:
+- **Lexicon-based method**: Loughran-McDonald (LM) Financial Sentiment Dictionary.
+- **Transformer-based model**: FinBERT, a fine-tuned version of BERT for financial texts.
+
+We systematically evaluated sentiment at:
+- **Section level**: Item 1 (Business), Item 7 (Management Discussion), Item 7A (Quantitative Disclosures).
+- **Full-document level**: Entire 10-K filings.
+
+The project explores how well each method captures financial sentiment and discusses their strengths, weaknesses, and real-world implications.
 
 ---
 
-## 📁 Project Overview
+## Methodology
 
-This project investigates the application of sentiment analysis methods to large-scale financial documents — specifically, SEC 10-K annual filings.
-
-We systematically compare:
-- **Loughran-McDonald (LM) Lexicon-Based Approach** 
-- **Transformer-Based FinBERT Model**
-
-across full document text and major sections (Item 1: Risk Factors, Item 7: Management Discussion, Item 7A: Quantitative Disclosures).
-
-Our goal is to evaluate how these two techniques perform on lengthy, domain-specific financial narratives, focusing on both **numerical scores** and **classification agreement**.
-
----
-## ⚙️ Methods Used
-
-- **Data Extraction**:  
-  - SEC EDGAR crawler and BeautifulSoup parsing
-- **Preprocessing**:  
-  - HTML cleaning, whitespace removal, section parsing
-- **Sentiment Analysis**:  
-  - **LM Dictionary** for word-count-based sentiment scoring
-  - **FinBERT Transformer** for deep contextualized sentiment scoring
-- **Summarization (Optional Extension)**:  
-  - BART-large-CNN model used to create summarized versions for experimental analysis
-- **Statistical Analysis**:
-  - Pearson Correlation
-  - Paired Samples t-Test
-  - Agreement Rate Calculation
-- **Visualization**:
-  - Scatter Plots, Class Distribution Comparison, Agreement Rate Bar Charts
-- **Tools**:  
-  - Python, NLTK, Transformers (HuggingFace), Matplotlib, Seaborn, Pandas, LaTeX
+- **Data Collection**: 10-K filings scraped from SEC EDGAR database.
+- **Preprocessing**: Cleaning HTML, extracting text, tokenization, and segmentation.
+- **Sentiment Analysis**:
+  - **LM Method**: Computed positive, negative, and net sentiment percentages.
+  - **FinBERT Model**: Classified text chunks as Positive, Neutral, or Negative, aggregated into overall scores.
+- **Statistical Comparison**:
+  - Pearson correlation analysis
+  - Paired samples t-tests
+  - Confusion matrix analysis
+  - Class distribution comparison
+  - Agreement rate calculation
 
 ---
 
-## 📊 Key Findings
+## Key Results
 
-- **Moderate positive correlation** between LM and FinBERT sentiment scores.
-- **FinBERT generally assigns higher (less negative) sentiment** than LM.
-- **Significant differences** in sentiment detection especially for risk-related sections (Item 1 and Item 7A).
-- **Agreement rates** between methods range between **61\%–68\%** across sections.
-- **LM tends toward neutral labeling**, whereas FinBERT identifies more positive tone in financial narratives.
-
----
-
-## 🏆 Highlights
-
-- Full-document and section-level comparative analysis
-- Real 10-K filings from S&P 500 companies
-- Statistical robustness (t-tests and correlation)
-- Reproducible codebase and clear documentation
-- Visualization-ready figures (300dpi quality for publishing)
+- **Correlation**: Moderate positive correlations between LM and FinBERT (r \u2248 0.45).
+- **Sentiment Scores**: FinBERT detects slightly more optimistic tones compared to LM.
+- **Agreement Rates**: Ranged from 21.4% to 89.2% depending on section.
+- **Confusion Matrix**: Highlighted that FinBERT is more sensitive to subtle negative cues missed by LM.
 
 ---
 
-## 📚 References
+## Visualizations
+- Correlation scatter plots between LM and FinBERT.
+- Sentiment class distribution bar charts.
+- Agreement rate bar chart.
+- Full-document level confusion matrix.
 
-- Loughran, T., & McDonald, B. (2011). *When is a liability not a liability? Textual analysis, dictionaries, and 10-Ks.* Journal of Finance.
-- Araci, D. (2019). *FinBERT: Financial Sentiment Analysis with Pre-trained Language Models.* arXiv.
-- Huang, A., Lin, C., Wang, Z., & Zuo, L. (2020). *Machine Learning and Financial Statement Analysis: Quantifying Risk-Return Trade-Offs Using 10-K Filings.*
-- Pang, B., & Lee, L. (2008). *Opinion Mining and Sentiment Analysis.*
-- Hu, M., & Liu, B. (2004). *Mining Opinion Features in Customer Reviews.*
+All visualizations were generated using Matplotlib and Seaborn.
 
 ---
 
-## 🚀 How to Reproduce
+## How to Run
 
-1. Clone/download the repository
-2. Install required Python packages:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/10K_Sentiment_Analysis.git
+   cd 10K_Sentiment_Analysis
+   ```
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-3. Run the notebooks inside `code/` sequentially:
-   - Start with `10k_scraping_and_cleaning.ipynb`
-   - Then move to `lm_sentiment_analysis.ipynb`
-   - Apply `finbert_sentiment_analysis.ipynb`
-   - Conduct statistical visualization with `statistical_analysis_visualization.ipynb`
-4. Compile the LaTeX file to generate the final paper.
+3. Open and run the notebook:
+   ```
+   code/sentiment_analysis_10k.ipynb
+   ```
+4. Compile the LaTeX document to generate the final paper.
 
 ---
 
-## 📬 Contact
+## Keywords
+`Sentiment Analysis`, `Financial NLP`, `SEC 10-K Filings`, `Loughran-McDonald Lexicon`, `FinBERT`, `Transformer Models`, `Lexicon-Based Methods`, `Financial Text Mining`
 
-- **Author**: Naresh Chethala
-- **Collaborators**: Furqan Ahmed, Sai Harshith
-- **Email**: nc623367@wne.edu
+---
+
+## References
+Key references include:
+- Loughran & McDonald (2011) \u2014 Financial Sentiment Lexicon
+- Devlin et al. (2019) \u2014 BERT: Pre-training Deep Bidirectional Transformers
+- Araci (2019) \u2014 FinBERT for Financial Sentiment Analysis
+- Huang et al. (2020) \u2014 Machine Learning and Financial Text Analysis
+- Pang & Lee (2008) \u2014 Opinion Mining and Sentiment Analysis
+
+(Full references are available in the paper.)
 
 ---

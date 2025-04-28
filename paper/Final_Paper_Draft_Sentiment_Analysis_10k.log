@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.1.25)  27 APR 2025 16:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.1.25)  27 APR 2025 23:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -403,84 +403,98 @@ LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 6
 (/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [3]
-Overfull \hbox (1.80328pt too wide) in paragraph at lines 80--81
+Overfull \hbox (1.80328pt too wide) in paragraph at lines 85--86
 \OT1/ptm/m/n/12 This sec-tion presents a com-par-a-tive sta-tis-ti-cal anal-y-s
 is of sen-ti-ment scores gen-er-ated by the lexicon-
  []
 
-<figures/correlation_scatter_full_and_sections.png, id=135, 1148.3703pt x 895.9
-071pt>
+[4]
+<figures/correlation_scatter_full_and_sections.png, id=148, 1148.3703pt x 859.5
+312pt>
 File: figures/correlation_scatter_full_and_sections.png Graphic file (type png)
 
 <use figures/correlation_scatter_full_and_sections.png>
 Package pdftex.def Info: figures/correlation_scatter_full_and_sections.png  use
-d on input line 104.
-(pdftex.def)             Requested size: 422.77664pt x 329.82632pt.
-[4
+d on input line 109.
+(pdftex.def)             Requested size: 422.77664pt x 316.4346pt.
+ [5
 pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has
  been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.109 
-      ] [5
+l.135 
+      
 pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.134 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has
- been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.134 
+l.135 
        <./figures/correlation_scatter_full_and_sections.png>]
-<figures/agreement_bar_chart.png, id=158, 502.2765pt x 380.1402pt>
+<figures/agreement_bar_chart.png, id=164, 502.2765pt x 368.577pt>
 File: figures/agreement_bar_chart.png Graphic file (type png)
 <use figures/agreement_bar_chart.png>
-Package pdftex.def Info: figures/agreement_bar_chart.png  used on input line 13
-7.
-(pdftex.def)             Requested size: 328.82707pt x 248.87473pt.
-<figures/class_distribution_all_sections.png, id=160, 1003.8303pt x 719.8092pt>
+Package pdftex.def Info: figures/agreement_bar_chart.png  used on input line 14
+3.
+(pdftex.def)             Requested size: 328.82707pt x 241.3044pt.
+<figures/class_distribution_all_sections.png, id=166, 1008.6483pt x 719.8092pt>
 
 File: figures/class_distribution_all_sections.png Graphic file (type png)
 <use figures/class_distribution_all_sections.png>
 Package pdftex.def Info: figures/class_distribution_all_sections.png  used on i
-nput line 149.
-(pdftex.def)             Requested size: 422.77664pt x 303.15253pt.
+nput line 155.
+(pdftex.def)             Requested size: 422.77664pt x 301.71371pt.
  [6
+pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.160 
+      
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.154 
-       <./figures/agreement_bar_chart.png>] [7
+l.160 
+       <./figures/agreement_bar_chart.png>]
+<figures/confusion_matrix_full_doc.png, id=177, 417.9615pt x 322.806pt>
+File: figures/confusion_matrix_full_doc.png Graphic file (type png)
+<use figures/confusion_matrix_full_doc.png>
+Package pdftex.def Info: figures/confusion_matrix_full_doc.png  used on input l
+ine 169.
+(pdftex.def)             Requested size: 328.82707pt x 253.97464pt.
+ [7
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.164 
-       <./figures/class_distribution_all_sections.png>]
-Overfull \hbox (4.05656pt too wide) in paragraph at lines 180--181
+l.173 
+       <./figures/class_distribution_all_sections.png>] [8
+pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.185 
+       <./figures/confusion_matrix_full_doc.png>]
+Overfull \hbox (4.05656pt too wide) in paragraph at lines 201--202
 []\OT1/ptm/m/n/12 Finally, section-level sen-ti-ment ag-gre-ga-tion as-sumes eq
 ual im-por-tance across all sec-tions, which
  []
 
-[8]
+[9]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 2
-10.
+31.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [9]
+) [10]
 
 Package natbib Warning: There were multiply defined citations.
 
-[10
+[11
 pdfTeX warning (ext4): destination with the same identifier (name{cite.Loughran
 2011}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.242 \end{document}
+l.263 \end{document}
                     ] (./Final_Paper_Draft_Sentiment_Analysis_10k.aux
 
 Package natbib Warning: Citation(s) may have changed.
@@ -493,16 +507,16 @@ L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `Final_Paper_Draft_Sentiment_Analysis_10k.out
 ' has not changed.
-(rerunfilecheck)             Checksum: AC9A1121ED70BF16321854C6201D23CB;2345.
+(rerunfilecheck)             Checksum: 8978E59942D9144A8E559E49F63CB424;2534.
  ) 
 Here is how much of TeX's memory you used:
- 10225 strings out of 474116
- 157795 string characters out of 5743682
- 1938187 words of memory out of 5000000
- 32409 multiletter control sequences out of 15000+600000
+ 10237 strings out of 474116
+ 158169 string characters out of 5743682
+ 1937187 words of memory out of 5000000
+ 32418 multiletter control sequences out of 15000+600000
  580861 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,9n,79p,1270b,570s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,9n,79p,1294b,574s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 ></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
@@ -513,11 +527,11 @@ local/texlive/2024/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/te
 xlive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2024
 /texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2024/texmf-dis
 t/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Final_Paper_Draft_Sentiment_Analysis_10k.pdf (10 pages, 12637
-56 bytes).
+Output written on Final_Paper_Draft_Sentiment_Analysis_10k.pdf (11 pages, 12549
+42 bytes).
 PDF statistics:
- 264 PDF objects out of 1000 (max. 8388607)
- 223 compressed objects within 3 object streams
- 49 named destinations out of 1000 (max. 500000)
- 144 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 280 PDF objects out of 1000 (max. 8388607)
+ 236 compressed objects within 3 object streams
+ 52 named destinations out of 1000 (max. 500000)
+ 157 words of extra memory for PDF output out of 10000 (max. 10000000)
 

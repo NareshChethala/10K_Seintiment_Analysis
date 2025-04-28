@@ -10,14 +10,14 @@
 \geometry{margin=1in}
 
 \title{Sentiment Analysis on SEC 10-K Filings: \newline Comparing Dictionary Based and Transformer Based Methods}
-\author{Naresh Chethala, Furqan Ahmed, Sai Harshith}
+\author{Naresh Chethala}
 \date{} 
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-This study explores the application of sentiment analysis methodologies on SEC 10-K filings by comparing a lexicon-based technique, the Loughran-McDonald (LM) dictionary, and a transformer-based model, FinBERT. We systematically analyzed sentiment at both section level (Items 1, 7, and 7A) and full-document level. Pearson correlation analysis revealed moderate positive relationships between LM and FinBERT sentiment scores, with the highest correlation observed in Item 7A ($r=0.4604$). Paired samples t-tests highlighted significant differences in sentiment detection, particularly in risk-related sections. Class distribution analysis showed that FinBERT tended to identify more positive tones, while LM produced a higher proportion of neutral classifications. Agreement analysis between the two methods ranged between 61\% and 68\%, underscoring both overlap and divergence in sentiment interpretation. Overall, while LM provides greater interpretability, FinBERT captures nuanced financial sentiments with higher sensitivity. Our findings contribute to the evaluation of sentiment extraction techniques on complex, domain-specific corporate disclosures.
+This study explores the application of sentiment analysis methodologies on SEC 10-K filings by comparing a lexicon-based technique, the Loughran-McDonald (LM) dictionary, and a transformer-based model, FinBERT. We systematically analyzed sentiment at both the section level (Items 1, 7, and 7A) and the full-document level. Pearson correlation analysis revealed moderate positive relationships between LM and FinBERT sentiment scores, with the highest correlation observed in Item 7A ($r=0.4604$). Paired samples t-tests identified statistically significant differences in sentiment detection for most sections, particularly in risk-related disclosures. Class distribution analysis showed that FinBERT tended to assign more filings to the positive class, while LM produced a higher proportion of neutral classifications. Agreement analysis indicated substantial variability across sections, with agreement rates ranging from 21.4\% to 89.2\%. Overall, while LM offers greater interpretability and stability, FinBERT demonstrates enhanced sensitivity to nuanced financial sentiment. Our findings contribute to the understanding and evaluation of sentiment extraction techniques for complex, domain-specific corporate disclosures.
 \end{abstract}
 
 \textbf{Keywords:} Sentiment Analysis, Financial NLP, SEC 10-K Filings, Loughran-McDonald Lexicon, FinBERT, Transformer Models, Lexicon-Based Methods, Sentiment Classification, Financial Text Mining
@@ -67,7 +67,12 @@ In our analysis, we utilized the Positive and Negative word lists from the LM di
 
 This method provides a transparent and interpretable sentiment measurement, allowing for direct tracking of how much positive versus negative language is used within corporate disclosures.
 
-\paragraph{Transformer-Based Method:} Sentiment analysis was also performed using FinBERT, a BERT-based model fine-tuned on financial texts. Given the token length constraints of transformer models, the input text was divided into dynamic chunks of approximately three sentences each. Batched inference was utilized to optimize GPU usage. For each chunk, FinBERT output sentiment labels (Positive, Neutral, Negative), which were aggregated to derive an overall sentiment score for each document and section.
+\paragraph{Transformer-Based Method:}
+For the transformer-based sentiment analysis, we utilized FinBERT \citep{Araci2019}, a BERT-based model pretrained specifically on financial corpora. Given the input length limitations of transformer models, each 10-K filing (or section) was dynamically divided into smaller chunks of approximately three sentences per segment to fit within the model's token limit. 
+
+Sentiment inference was performed in batches to optimize GPU utilization. For each chunk, FinBERT produced sentiment labels (Positive, Neutral, or Negative) along with associated probabilities. To derive a unified sentiment score for each section or full document, we aggregated the chunk-level predictions by calculating the proportion of positive, neutral, and negative classifications, and summarized these into an overall net sentiment percentage. 
+
+This approach enables robust handling of lengthy financial documents while preserving local contextual sentiment signals throughout the filing.
 
 \subsection{Sentiment Aggregation}
 For section-level sentiment analysis, sentiment scores were calculated separately for major 10-K sections, such as Risk Factors (Item 1A) and Management’s Discussion and Analysis (Item 7). Scores were aggregated via simple weighted averaging based on section lengths. For full-document sentiment, sentiment scores across all chunks were averaged to yield a single representative score.
@@ -105,7 +110,7 @@ Document & 0.4543 & 0.0000 & -11.4415 & 0.0000 \\
 \caption{Correlation Scatter Plots between LM and FinBERT sentiment scores at full-document and section levels.}
 \label{fig:scatter_all}
 \end{figure}
-\vspace{0.5cm}
+%\vspace{0.5cm}
 
 \subsection{Comparison of Mean Sentiment Scores}
 
@@ -126,11 +131,12 @@ Document & -4.7996 & 6.1798 & -1.8111 & 0.7053 \\
 \hline
 \end{tabular}
 \end{table}
-\vspace{0.5cm}
+%\vspace{0.5cm}
 
 \subsection{Agreement Analysis}
 
-Sentiment scores were categorized into Positive, Neutral, and Negative classes based on thresholding ($>$1\% positive, $<$-1\% negative, otherwise neutral). The agreement rate between LM and FinBERT classifications was calculated for each section. As shown in Figure~\ref{fig:agreement_bar}, agreement ranged between 61\% and 68\%, consistent with moderate but imperfect concordance observed in previous financial sentiment studies \citep{Li2010}.
+Sentiment scores were categorized into Positive, Neutral, and Negative classes based on thresholding ($>$1\% positive, $<$-1\% negative, otherwise neutral). The agreement rate between LM and FinBERT classifications was calculated for each section. As shown in Figure~\ref{fig:agreement_bar}, agreement rates varied substantially across sections, ranging from 21.4\% (Item 1) to 89.2\% (Item 7). This variability highlights the differences in sentiment assignment between the two methods, particularly in sections with nuanced or ambiguous language. These findings are consistent with prior observations in financial sentiment studies that report imperfect concordance between lexicon-based and machine learning-based sentiment classifiers \citep{Li2010}.
+
 
 \begin{figure}[H]
 \centering
@@ -138,7 +144,7 @@ Sentiment scores were categorized into Positive, Neutral, and Negative classes b
 \caption{Agreement rates between LM and FinBERT sentiment classifications at full-document and section levels.}
 \label{fig:agreement_bar}
 \end{figure}
-\vspace{0.5cm}
+%\vspace{0.5cm}
 
 \subsection{Class Distribution Comparison}
 
@@ -150,7 +156,20 @@ Finally, Figure~\ref{fig:class_dist_all} compares the distribution of sentiment 
 \caption{Class distribution comparison between LM and FinBERT across full-document and section levels.}
 \label{fig:class_dist_all}
 \end{figure}
-\vspace{0.5cm}
+%\vspace{0.5cm}
+
+\subsection{Confusion Matrix Analysis}
+
+To further analyze the discrepancies between the LM and FinBERT sentiment classifications, we constructed a confusion matrix at the full-document level (Figure~\ref{fig:confusion_matrix}). 
+
+The confusion matrix reveals that FinBERT and LM often disagreed, particularly when LM classified a filing as Neutral while FinBERT identified it as Negative. This misalignment highlights the models’ different sensitivities: FinBERT detects more subtle negative sentiment even when LM assigns neutrality. Such discrepancies are consistent with prior findings that transformer-based models capture nuanced contextual sentiment better than traditional lexicon-based approaches \citep{Huang2020}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/confusion_matrix_full_doc.png}
+\caption{Confusion matrix comparing LM and FinBERT sentiment classifications at full-document level.}
+\label{fig:confusion_matrix}
+\end{figure}
 
 \section{Discussion}
 
@@ -165,6 +184,8 @@ The paired samples t-tests confirmed statistically significant differences in me
 Agreement rate analysis, ranging between 61\% and 68\%, indicates moderate but imperfect alignment in sentiment classification outcomes. This level of divergence aligns with prior research that highlights challenges in achieving high consistency across different sentiment extraction methodologies when applied to complex domain-specific corpora like 10-K filings \citep{Li2010}.
 
 Moreover, class distribution comparisons revealed that FinBERT assigned a greater proportion of documents to the Positive category compared to LM, which favored Neutral classifications. This difference suggests that lexicon-based methods may adopt a more conservative stance, while transformer models, due to their semantic understanding, can detect optimistic tones even in formally cautious regulatory language.
+
+The confusion matrix shows a significant proportion of filings labeled Neutral by LM being classified as Negative by FinBERT, suggesting FinBERT’s higher sensitivity to implicit negative signals.
 
 Overall, these findings emphasize the need for careful methodological selection when conducting financial sentiment analysis. While LM-based approaches offer transparency and reproducibility, transformer-based models provide richer context-sensitive representations that may better capture managerial tone, strategic signaling, and implicit risk communications in financial narratives.
 
