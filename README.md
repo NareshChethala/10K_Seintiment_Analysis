@@ -1,5 +1,10 @@
 # Sentiment Analysis on SEC 10-K Filings
 **Comparing Dictionary-Based and Transformer-Based Methods**
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+© 2025 Naresh Chethala. All rights reserved.
 
 ## Overview
 This study analyzes sentiment in SEC 10-K filings by comparing two approaches:
